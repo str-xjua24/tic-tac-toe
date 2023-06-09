@@ -40,4 +40,21 @@ h1 {
   width: 148px;
   height: 148px;
   border: 1px solid #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zero {
+  width: 74px;
+  height: 74px;
+  border: 15px solid black;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.one {
+  width: 20px;
+  height: 100px;
+  background-color: black;
 }
