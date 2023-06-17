@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Open+Sans&family=Rubik&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&family=Open+Sans&family=Rubik&display=swap");
 
 html {
   box-sizing: border-box;
@@ -24,9 +24,15 @@ main {
 
 h1 {
   margin: 0;
-  font-family: 'Indie Flower', sans-serif;
+  font-family: "Indie Flower", sans-serif;
   font-size: 64px;
   color: #fff;
+}
+
+h2 {
+  font-family: "Indie Flower", sans-serif;
+  font-size: 32px;
+  margin-top: 0;
 }
 
 #gameboard {

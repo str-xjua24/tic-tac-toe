@@ -1,30 +1,41 @@
 // Game board data and player initialization
-const gameData = () => {
-  const board = [
-    "", "", "",
-    "", "", "",
-    "", "", "",
+const boardData = () => {
+  const board = ["", "", "", "", "", "", "", "", ""];
+
+  const winningSolutions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
 
-  const winningSolutions = [];
-  
-  const getBoard = () => {
-    return board;
-  }
+  const getWinningSolutions = () => {
+    return winningSolutions;
+  };
 
   const getCell = (index) => {
     return board[index];
-  }
+  };
 
   const setCell = (index, value) => {
     board[index] = value;
-  }
+  };
 
-  const playerOne = player('Player 1', '0');
-  const playerTwo = player('Player 2', '1');
+  const playerOne = player("Player 1", "0");
+  const playerTwo = player("Player 2", "1");
 
-  return { getBoard, getCell, setCell, playerOne, playerTwo};
-}
+  return {
+    getCell,
+    setCell,
+    playerOne,
+    playerTwo,
+    getWinningSolutions,
+  };
+};
 
 // Player data
 const player = (name, sign) => {
@@ -33,58 +44,64 @@ const player = (name, sign) => {
 
   const getPlayerSign = () => {
     return playerSign;
-  }
+  };
 
   const getPlayerName = () => {
     return playerName;
-  }
+  };
 
   return { getPlayerName, getPlayerSign };
-}
+};
+
+const checkWins = () => {
+  const winningSol = game.getWinningSolutions();
+};
 
 // Renders board to the DOM
 const renderGame = (game) => {
   let player = game.playerOne.getPlayerSign();
-  const board = game.getBoard();
-  const gameboard = document.getElementById("gameboard");
 
-  const checkWins = () => {
-    
-  }
+  const gameboard = document.getElementById("gameboard");
+  const playerDisplay = document.getElementById("current-player");
+
+  playerDisplay.textContent = game.playerOne.getPlayerName();
 
   // Fills gameboard cell according to player's turn
-  const playerMove = (e) => {
-    let index = e.target.id;
-    console.log("Cell " + index + " is filled");
-    const move = document.createElement('div');
+  const handleCell = (e) => {
+    let currentIndex = e.target.id;
+    const moveSign = document.createElement("div");
 
-    if (player === '0') {
-      move.classList.add('zero');
-      board[Number(index)] = '0';
-      player = '1';
+    if (player === "0") {
+      moveSign.classList.add("zero");
+      game.setCell(Number(currentIndex), "0");
+      player = "1";
+      playerDisplay.textContent = game.playerTwo.getPlayerName();
     } else {
-      move.classList.add('one');
-      board[Number(index)] = '1';
-      player = '0';
+      moveSign.classList.add("one");
+      game.setCell(Number(currentIndex), "1");
+      player = "0";
+      playerDisplay.textContent = game.playerOne.getPlayerName();
     }
-    e.target.appendChild(move);
-    console.log(board);
-  }
+
+    e.target.appendChild(moveSign);
+    console.log("Cell " + currentIndex + " is filled");
+  };
 
   for (let i = 0; i < 9; i++) {
-    const cellEle = document.createElement('div');
-    cellEle.classList.add('cell');
-    cellEle.setAttribute('id', i);
+    const cellEle = document.createElement("div");
+
+    cellEle.classList.add("cell");
+    cellEle.setAttribute("id", i);
+
     gameboard.appendChild(cellEle);
 
-    cellEle.addEventListener('click', playerMove, { once: true });
+    cellEle.addEventListener("click", handleCell, { once: true });
   }
-}
+};
 
-// Initializes game data, renders board, starts game
+// Initializes game data and renders board
 const gameController = (() => {
-  const game = gameData();
+  const game = boardData();
 
   renderGame(game);
-
 })();
